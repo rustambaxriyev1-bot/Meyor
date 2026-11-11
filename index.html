@@ -13,6 +13,7 @@
   --bg:#F2F5F9; --surface:#FFFFFF; --ink:#14202E; --muted:#4B5B6E; --line:#D3DCE6;
   --accent:#17508A; --accent-ink:#FFFFFF; --tint:#E3EDF7; --hot:#B4232A; --hot-tint:#FBE9E7;
   --brand:#123E6E; --brand-ink:#FFFFFF; --brand-soft:#C9DDF2;
+  --gold:#F2B544; --gold-ink:#3A2A00; --h1:#B5CFEA; --h2:#5E95CF; --leaf:#2E9E5B; --shadow:0 1px 2px rgba(20,32,46,.05),0 8px 24px rgba(20,32,46,.08);
   --display:"Montserrat","Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   --body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:light;
@@ -21,14 +22,14 @@
   :root:not([data-theme="light"]){
     --bg:#0D141C; --surface:#162029; --ink:#E8EEF5; --muted:#A6B4C3; --line:#2A3745;
     --accent:#7DB7F0; --accent-ink:#0D141C; --tint:#1C2C3D; --hot:#F28B82; --hot-tint:#3A1F1E;
-    --brand:#15324F; --brand-ink:#FFFFFF; --brand-soft:#B9D3EE;
+    --brand:#15324F; --brand-ink:#FFFFFF; --brand-soft:#B9D3EE; --shadow:none; --h1:#27425F; --h2:#3F6FA3; --leaf:#4CC27C;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0D141C; --surface:#162029; --ink:#E8EEF5; --muted:#A6B4C3; --line:#2A3745;
   --accent:#7DB7F0; --accent-ink:#0D141C; --tint:#1C2C3D; --hot:#F28B82; --hot-tint:#3A1F1E;
-  --brand:#15324F; --brand-ink:#FFFFFF; --brand-soft:#B9D3EE;
+  --brand:#15324F; --brand-ink:#FFFFFF; --brand-soft:#B9D3EE; --shadow:none; --h1:#27425F; --h2:#3F6FA3; --leaf:#4CC27C;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -37,18 +38,32 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 button,input{font:inherit;color:inherit}
 #app{height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto}
 main{flex:1 1 0;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 24px;display:flex;flex-direction:column;gap:16px}
+main>*{flex:none}
 h1{margin:0;font-family:var(--display);font-weight:800;font-size:22px;line-height:1.15;text-wrap:balance}
 h2{margin:0;font-family:var(--display);font-weight:700;font-size:16px}
 .muted{color:var(--muted);font-size:14px}
-.band{position:relative;overflow:hidden;border-radius:18px;background:var(--brand);color:var(--brand-ink);padding:16px;display:flex;flex-direction:column;gap:6px}
-.band .motif{position:absolute;right:-8px;top:0;height:100%;width:150px;opacity:.22}
+.band{position:relative;overflow:hidden;border-radius:22px;background:var(--brand);color:var(--brand-ink);padding:20px 18px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.band .motif{position:absolute;right:-10px;top:0;height:120px;width:150px;opacity:.3}
 .band>*:not(.motif){position:relative}
-.wordmark{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:3px;text-transform:uppercase;line-height:1}
-.band.big .wordmark{font-size:38px}
+.wordmark{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:3px;text-transform:uppercase;line-height:1}
+.band.big .wordmark{font-size:44px}
+.band.big{padding:28px 20px}
+.band.big .slogan{font-size:16px}
 .slogan{font-size:14px;font-weight:600;color:var(--brand-soft)}
-.band .hello{font-size:15px;margin-top:4px;max-width:75%}
-.streak{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:6px 12px;border-radius:16px;background:#FFFFFF;color:#B4232A;font-weight:700;font-size:14px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.band .hello{font-size:17px;font-weight:600;margin-top:10px;text-wrap:balance}
+.hrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:16px;background:rgba(255,255,255,.16);font-weight:600;font-size:13px}
+.dots{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:12px}
+.dot{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--brand-soft)}
+.dot i{display:block;width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.4)}
+.dot.part i{background:rgba(255,255,255,.4)}
+.dot.full i{background:var(--gold);border-color:var(--gold)}
+.dot.fut i{border-style:dashed;opacity:.5}
+.dot.now i{box-shadow:0 0 0 2px var(--brand),0 0 0 4px #FFFFFF}
+.dot.now{color:#FFFFFF}
+.streak{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:16px;background:var(--gold);color:var(--gold-ink);font-weight:700;font-size:13px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.card.done{--ink:#3A2A00;--muted:#3A2A00;--tint:rgba(58,42,0,.16);--accent:#3A2A00;background:var(--gold);border-color:var(--gold);color:#3A2A00}
 .row{display:flex;align-items:center;gap:12px}
 .between{justify-content:space-between}
 .datebar{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -60,20 +75,25 @@ h2{margin:0;font-family:var(--display);font-weight:700;font-size:16px}
 .summary{display:flex;align-items:center;gap:16px}
 .ring{flex:none}
 .big{font-family:var(--display);font-weight:800;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
-.tick{width:100%;min-height:52px;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.tick{width:100%;min-height:56px;display:flex;align-items:center;gap:12px;text-align:left;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
 .tick[aria-pressed="true"]{background:var(--tint);border-color:var(--accent)}
 .tick .box{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center}
 .tick[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
 .tick .box svg{display:none}
 .tick[aria-pressed="true"] .box svg{display:block}
-.tick .lab{display:flex;flex-direction:column;gap:1px;min-width:0}
+.tick .lab{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1 1 0}
+.tick.next{border:2px solid var(--accent)}
+.tick.next .k{color:var(--accent)}
+.mi{flex:none;width:40px;height:40px;border-radius:12px;background:var(--tint);color:var(--accent);display:grid;place-items:center}
+.tick[aria-pressed="true"] .mi{background:var(--surface)}
 .tick .k{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
 .tick .v{font-size:15px;overflow-wrap:anywhere}
 .tag{font-weight:700;color:var(--hot)}
 .bar{height:10px;border-radius:5px;background:var(--tint);overflow:hidden}
 .bar>i{display:block;height:100%;background:var(--accent);border-radius:5px}
 .field{display:flex;gap:8px;align-items:center}
-.field input,.inp{flex:1 1 0;min-width:0;width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:0 12px;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.field input{flex:1 1 0;min-width:0}
+.field input,.inp{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:0 12px;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
 .inp.text{font-size:15px;font-weight:400}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:14px;cursor:pointer}
@@ -119,7 +139,40 @@ form{display:flex;flex-direction:column;gap:14px;margin:0}
 .kv>div{padding:10px 12px;border-radius:12px;background:var(--tint);display:flex;flex-direction:column;gap:2px}
 .kv b{font-family:var(--display);font-size:18px;font-variant-numeric:tabular-nums}
 .kv span{font-size:13px;color:var(--muted)}
-nav{flex:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);background:var(--surface);padding-bottom:env(safe-area-inset-bottom,0)}
+.treerow{display:flex;align-items:center;gap:14px}
+.tree{flex:none}
+.tree .canopy{transform-box:view-box;transform-origin:80px 160px;animation:sway 5s ease-in-out infinite}
+.tree.wilt .canopy{animation:none;transform:rotate(5deg)}
+.tree .pop{transform-box:fill-box;transform-origin:center;animation:pop .6s ease-out}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.tree .canopy,.tree .pop{animation:none}}
+.minipills{display:flex;flex-wrap:wrap;gap:6px}
+.mp{padding:4px 10px;border-radius:12px;background:var(--tint);font-size:13px;font-weight:600}
+.gauge{display:block;margin:0 auto}
+.pt{display:grid;grid-template-columns:118px minmax(0,1fr) 46px;gap:8px;align-items:center;font-size:13px}
+.pt span:last-child{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.dns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dn{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.dn b{font-size:13px}
+.dn span{font-size:12px;color:var(--muted)}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,auto);grid-template-columns:22px repeat(16,minmax(0,1fr));gap:3px;align-items:center}
+.heat b{font-size:10px;font-weight:600;color:var(--muted)}
+.heat i{display:block;aspect-ratio:1;border-radius:4px;background:var(--tint)}
+.heat i.s1{background:var(--h1)}.heat i.s2{background:var(--h2)}.heat i.s3{background:var(--accent)}.heat i.s4{background:var(--gold)}
+.heat i.fut{background:none;border:1px dashed var(--line)}
+.heat i.now{outline:2px solid var(--ink);outline-offset:1px}
+.legend{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;background:var(--tint)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.facts>div{padding:8px 10px;border-radius:12px;background:var(--tint);display:flex;flex-direction:column;gap:2px}
+.facts b{font-size:13.5px;overflow-wrap:anywhere}
+.facts span{font-size:12px;color:var(--muted)}
+.hand{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--tint)}
+.hand svg{flex:none;color:var(--accent)}
+.hand b{font-size:14px}
+.hand span{font-size:13px;color:var(--muted);display:block}
+nav{flex:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--line);background:var(--surface);padding-bottom:env(safe-area-inset-bottom,0)}
 nav[hidden]{display:none}
 nav a{min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600}
 nav a[aria-current="page"]{color:var(--accent)}
@@ -134,6 +187,7 @@ svg text{font-family:var(--body)}
 <a href="#today" id="tab-today"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12l3 3 5-6"></path></svg>Бугун</a>
 <a href="#week" id="tab-week"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"></path></svg>Ҳафта</a>
 <a href="#menu" id="tab-menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16c0 5-3.5 8-8 8s-8-3-8-8z"></path><path d="M9 7c-1-1.5 1-2 0-3.5M14 7c-1-1.5 1-2 0-3.5"></path></svg>Таомнома</a>
+<a href="#body" id="tab-body"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path></svg>Тана</a>
 <a href="#profile" id="tab-profile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1-4 4-6 8-6s7 2 8 6"></path></svg>Профил</a>
 </nav>
 </div>
@@ -170,9 +224,9 @@ function applyTheme(){if(inTg&&tg.colorScheme)document.documentElement.setAttrib
 function haptic(){try{if(inTg&&tg.HapticFeedback&&atLeast("6.1"))tg.HapticFeedback.impactOccurred("light")}catch(e){}}
 function tgName(){try{return (inTg&&tg.initDataUnsafe&&tg.initDataUnsafe.user&&tg.initDataUnsafe.user.first_name)||""}catch(e){return ""}}
 
-var state={days:{},weights:{},wu:{},profile:null,updated:0};
+var state={days:{},weights:{},wu:{},waist:{},bu:{},profile:null,updated:0};
 var sel=keyOf(new Date());
-var sync=cloud?"wait":"local", dirtyKeys={}, timer=null, draft=null, formErr="", keepErr=false;
+var sync=cloud?"wait":"local", dirtyKeys={}, timer=null, draft=null, formErr="", keepErr=false, food=0, lastSc=null, lastKey="";
 
 function pad(n){return n<10?"0"+n:""+n}
 function keyOf(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
@@ -194,38 +248,42 @@ function validProfile(p){
   if(!(age>=18&&age<=90&&h>=130&&h<=220&&w0>=35&&w0<=250&&goal>=35&&goal<=250))return null;
   return {name:cleanStr(p.name,30),sex:p.sex==="f"?"f":"m",age:age,h:h,w0:w0,goal:goal,act:act>=1&&act<=3?act:1,health:!!p.health,at:+p.at||Date.now(),u:+p.u||0};
 }
-function normalize(o){o=obj(o);return {days:obj(o.days),weights:obj(o.weights),wu:obj(o.wu),profile:validProfile(o.profile),updated:+o.updated||0}}
+function normalize(o){o=obj(o);return {days:obj(o.days),weights:obj(o.weights),wu:obj(o.wu),waist:obj(o.waist),bu:obj(o.bu),profile:validProfile(o.profile),updated:+o.updated||0}}
 function merge(a,b){
-  var out={days:{},weights:{},wu:{},profile:null,updated:Math.max(a.updated||0,b.updated||0)},k;
+  var out={days:{},weights:{},wu:{},waist:{},bu:{},profile:null,updated:Math.max(a.updated||0,b.updated||0)},k;
   for(k in a.days)out.days[k]=a.days[k];
   for(k in b.days){var x=out.days[k],y=b.days[k];if(!x||(+(y&&y.u)||0)>(+(x&&x.u)||0))out.days[k]=y}
   for(k in a.weights){out.weights[k]=a.weights[k];out.wu[k]=+a.wu[k]||0}
   for(k in b.weights){if(out.weights[k]===undefined||(+b.wu[k]||0)>(out.wu[k]||0)){out.weights[k]=b.weights[k];out.wu[k]=+b.wu[k]||0}}
+  for(k in a.waist){out.waist[k]=a.waist[k];out.bu[k]=+a.bu[k]||0}
+  for(k in b.waist){if(out.waist[k]===undefined||(+b.bu[k]||0)>(out.bu[k]||0)){out.waist[k]=b.waist[k];out.bu[k]=+b.bu[k]||0}}
   var fa=a.profile,fb=b.profile;out.profile=fa&&fb?(fb.u>fa.u?fb:fa):(fa||fb||null);
   return out;
 }
-function hasData(s){return !!(s.profile||Object.keys(s.days).length||Object.keys(s.weights).length)}
+function hasData(s){return !!(s.profile||Object.keys(s.days).length||Object.keys(s.weights).length||Object.keys(s.waist).length)}
 
 /* cloud format: one key per month, value under 4096 characters */
 function bits(a,n){var s="";for(var i=0;i<n;i++)s+=a&&a[i]?"1":"0";return s}
 function unbits(s,n){var a=[];s=String(s||"");for(var i=0;i<n;i++)a.push(s.charAt(i)==="1"?1:0);return a}
 function monthDoc(mk,slim){
-  var ym=mk.slice(1,5)+"-"+mk.slice(5,7),d={},w={},k;
+  var ym=mk.slice(1,5)+"-"+mk.slice(5,7),d={},w={},b={},k;
   for(k in state.days){if(k.slice(0,7)!==ym)continue;var x=getDay(k),o={m:bits(x.meals,4),h:bits(x.habits,5),s:x.steps,f:bits([x.osh,x.dough,x.gym],3)};if(!slim)o.u=x.u;d[k.slice(8)]=o}
   for(k in state.weights){if(k.slice(0,7)!==ym)continue;w[k.slice(8)]=slim?[+state.weights[k]]:[+state.weights[k],+state.wu[k]||0]}
-  return JSON.stringify({d:d,w:w});
+  for(k in state.waist){if(k.slice(0,7)!==ym)continue;b[k.slice(8)]=slim?[+state.waist[k]]:[+state.waist[k],+state.bu[k]||0]}
+  return JSON.stringify({d:d,w:w,b:b});
 }
 function readMonth(mk,raw,into){
   var o;try{o=obj(JSON.parse(raw))}catch(e){return}
-  var ym=mk.slice(1,5)+"-"+mk.slice(5,7),d=obj(o.d),w=obj(o.w),k;
+  var ym=mk.slice(1,5)+"-"+mk.slice(5,7),d=obj(o.d),w=obj(o.w),b=obj(o.b),k;
   for(k in d){var x=obj(d[k]),f=unbits(x.f,3);into.days[ym+"-"+k]={meals:unbits(x.m,4),habits:unbits(x.h,5),steps:Math.max(0,Math.round(+x.s)||0),osh:f[0],dough:f[1],gym:f[2],u:+x.u||1}}
   for(k in w){var e=Array.isArray(w[k])?w[k]:[];into.weights[ym+"-"+k]=+e[0]||0;into.wu[ym+"-"+k]=+e[1]||1}
+  for(k in b){var e2=Array.isArray(b[k])?b[k]:[];into.waist[ym+"-"+k]=+e2[0]||0;into.bu[ym+"-"+k]=+e2[1]||1}
 }
 function valueFor(key){
   if(key==="profile")return state.profile?JSON.stringify(state.profile):"";
   var v=monthDoc(key,false);if(v.length>4000)v=monthDoc(key,true);return v;
 }
-function monthKeys(s){var set={},k;for(k in s.days)set[mkey(k)]=1;for(k in s.weights)set[mkey(k)]=1;return Object.keys(set)}
+function monthKeys(s){var set={},k;for(k in s.days)set[mkey(k)]=1;for(k in s.weights)set[mkey(k)]=1;for(k in s.waist)set[mkey(k)]=1;return Object.keys(set)}
 
 function loadLocal(){try{var r=localStorage.getItem(LS);if(r)state=normalize(JSON.parse(r))}catch(e){}}
 function saveLocal(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
@@ -257,7 +315,7 @@ function pullCloud(){
       if(!ks.length){if(hasData(state)){monthKeys(state).forEach(function(k){dirtyKeys[k]=1});if(state.profile)dirtyKeys.profile=1;flush()}return fin(true)}
       cloud.getItems(ks,function(err2,vals){
         if(err2||!vals)return fin(false);
-        var remote={days:{},weights:{},wu:{},profile:null,updated:0};
+        var remote={days:{},weights:{},wu:{},waist:{},bu:{},profile:null,updated:0};
         ks.forEach(function(k){var raw=vals[k];if(!raw)return;if(k==="profile"){try{remote.profile=validProfile(JSON.parse(raw))}catch(e){}}else readMonth(k,raw,remote)});
         var before=JSON.stringify(state);
         state=merge(state,remote);saveLocal();
@@ -295,8 +353,13 @@ function score(d){var s=0,i,dv=derive(),sg=dv?dv.stepGoal:10000;for(i=0;i<4;i++)
 function streak(){var k=todayKey(),n=0;if(score(getDay(k))<6)k=shift(k,-1);while(state.days[k]&&score(getDay(k))>=6){n++;k=shift(k,-1)}return n}
 function bestStreak(){var ks=Object.keys(state.days).sort(),best=0,run=0,prev=null;ks.forEach(function(k){if(score(getDay(k))>=6){run=(prev&&shift(prev,1)===k)?run+1:1;prev=k;if(run>best)best=run}else{run=0;prev=null}});return best}
 
+function goodDays(){var n=0;for(var k in state.days)if(score(getDay(k))>=6)n++;return n}
+function level(){var g=goodDays(),L=[[0,"Бошловчи"],[7,"Изчил"],[21,"Собит"],[60,"Устоз"]],i=0;while(i<L.length-1&&g>=L[i+1][0])i++;return {name:L[i][1],next:i<L.length-1?L[i+1]:null,g:g}}
+function weekDots(){var tk=todayKey(),n=0,h="";weekKeys(tk).forEach(function(k,i){var s=state.days[k]?score(getDay(k)):0,c=k>tk?"fut":s>=6?"full":s>=1?"part":"none";if(s>=6)n++;h+='<span class="dot '+c+(k===tk?" now":"")+'"><i></i><b>'+DSHORT[i]+'</b></span>'});return '<div class="dots" role="img" aria-label="Шу ҳафта '+n+' кун бажарилди">'+h+'</div>'}
+var MI=['<path d="M5 18a7 7 0 0 1 14 0"></path><path d="M2 18h20M12 4v3M4.5 8.5l2 2M19.5 8.5l-2 2"></path>','<circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path>','<path d="M12 8c-3-2-7 0-7 5s3 8 7 8 7-3 7-8-4-7-7-5z"></path><path d="M12 8c0-2 1-4 3-5"></path>','<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path>'];
+function mealIcon(i){return '<span class="mi"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+MI[i]+'</svg></span>'}
 /* pieces */
-function motif(){return '<svg class="motif" viewBox="0 0 150 120" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="3"><path d="M75 4l34 56-34 56-34-56z"></path><path d="M75 26l20 34-20 34-20-34z"></path><path d="M131 4l34 56-34 56-34-56z"></path><path d="M19 4l34 56-34 56-34-56z"></path></g><g fill="#FFFFFF"><path d="M75 46l8 14-8 14-8-14z"></path><circle cx="103" cy="12" r="4"></circle><circle cx="103" cy="108" r="4"></circle><circle cx="47" cy="12" r="4"></circle><circle cx="47" cy="108" r="4"></circle></g></svg>'}
+function motif(){return '<svg class="motif" viewBox="0 0 150 120" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="3"><path d="M75 4l34 56-34 56-34-56z"></path><path d="M75 26l20 34-20 34-20-34z"></path><path d="M131 4l34 56-34 56-34-56z"></path><path d="M19 4l34 56-34 56-34-56z"></path></g><g fill="#FFFFFF"><path d="M75 46l8 14-8 14-8-14z" fill="#F2B544"></path><circle cx="103" cy="12" r="4"></circle><circle cx="103" cy="108" r="4"></circle><circle cx="47" cy="12" r="4"></circle><circle cx="47" cy="108" r="4"></circle></g></svg>'}
 function band(big,extra){return '<header class="band'+(big?" big":"")+'">'+motif()+'<div class="wordmark">Меъёр</div><div class="slogan">Ҳақиқий ўзбекона диета</div>'+(extra||"")+'</header>'}
 function flame(){return '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z"></path></svg>'}
 function dateLabel(k){var d=parse(k);return DAYS[dow(k)]+", "+d.getDate()+"-"+MONTHS[d.getMonth()]}
@@ -307,32 +370,114 @@ function ring(n,total){
 }
 function fmt(n){return (Math.round(n*10)/10).toString().replace(".",",")}
 function num(n){return Math.round(n).toLocaleString("ru-RU")}
-function chart(){
-  var e=weightEntries(),dv=derive();
-  if(e.length<2)return '<p class="muted" style="margin:0">Камида 2 марта вазн киритсангиз, шу ерда график чиқади.</p>';
-  var W=320,H=130,L=8,R=48,T=16,B=14,showGoal=dv.mode==="lose";
+function chartOf(e,lines,unit,empty){
+  if(e.length<2)return '<p class="muted" style="margin:0">'+empty+'</p>';
+  var W=320,H=130,L=8,R=52,T=16,B=14;
   var vals=e.map(function(x){return x[1]});
   var lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
-  if(showGoal){lo=Math.min(lo,dv.goal);hi=Math.max(hi,dv.start)}
+  lines.forEach(function(l){lo=Math.min(lo,l.v);hi=Math.max(hi,l.v)});
   lo-=1;hi+=1;
   var t0=parse(e[0][0]).getTime(),t1=parse(e[e.length-1][0]).getTime(),span=Math.max(1,t1-t0);
   function X(k){return L+(W-L-R)*(parse(k).getTime()-t0)/span}
   function Y(v){return T+(H-T-B)*(hi-v)/(hi-lo)}
   var pts=e.map(function(x){return X(x[0]).toFixed(1)+","+Y(x[1]).toFixed(1)});
-  var last=e[e.length-1],lx=X(last[0]),ly=Y(last[1]),gy=Y(dv.goal);
+  var last=e[e.length-1],lx=X(last[0]),ly=Y(last[1]),lblY=ly+4,h="";
+  lines.forEach(function(l){var gy=Y(l.v);if(Math.abs(ly-gy)<14)lblY=ly-10;h+='<path d="M'+L+' '+gy.toFixed(1)+'H'+(W-R)+'" stroke="var(--hot)" stroke-width="1.5" stroke-dasharray="4 4"></path><text x="'+(W-R+4)+'" y="'+(gy+4).toFixed(1)+'" font-size="11" fill="var(--hot)" font-weight="700">'+fmt(l.v)+' '+unit+'</text>'});
   var area="M"+pts[0]+" L"+pts.join(" L")+" L"+lx.toFixed(1)+","+(H-B)+" L"+L+","+(H-B)+" Z";
-  var lblY=showGoal&&Math.abs(ly-gy)<14?ly-10:ly+4;
-  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Вазн графиги: охирги '+fmt(last[1])+' кг" style="display:block">'
-   +(showGoal?'<path d="M'+L+' '+gy.toFixed(1)+'H'+(W-R)+'" stroke="var(--hot)" stroke-width="1.5" stroke-dasharray="4 4"></path><text x="'+(W-R+4)+'" y="'+(gy+4).toFixed(1)+'" font-size="11" fill="var(--hot)" font-weight="700">'+fmt(dv.goal)+' кг</text>':'')
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="График: охирги қиймат '+fmt(last[1])+' '+unit+'" style="display:block">'+h
    +'<path d="'+area+'" fill="var(--tint)"></path>'
    +'<polyline points="'+pts.join(" ")+'" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></polyline>'
    +'<circle cx="'+lx.toFixed(1)+'" cy="'+ly.toFixed(1)+'" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"></circle>'
    +'<text x="'+(lx+8).toFixed(1)+'" y="'+lblY.toFixed(1)+'" font-size="12" fill="var(--ink)" font-weight="700">'+fmt(last[1])+'</text>'
    +'</svg>';
 }
+function chart(){var dv=derive();return chartOf(weightEntries(),dv.mode==="lose"?[{v:dv.goal}]:[],"кг","Камида 2 марта вазн киритсангиз, шу ерда график чиқади.")}
+function waistEntries(){return Object.keys(state.waist).sort().map(function(k){return [k,+state.waist[k]]}).filter(function(e){return e[1]>0})}
+function waistLimits(){return state.profile.sex==="f"?[80,88]:[94,102]}
+function waistChart(){return chartOf(waistEntries(),[{v:waistLimits()[0]}],"см","Камида 2 марта бел айланасини киритсангиз, шу ерда график чиқади.")}
 function weekKeys(k){var m=shift(k,-dow(k)),a=[];for(var i=0;i<7;i++)a.push(shift(m,i));return a}
 function goalPct(dv){if(dv.mode!=="lose"||dv.start<=dv.goal)return null;return Math.max(0,Math.min(100,Math.round((dv.start-dv.w)/(dv.start-dv.goal)*100)))}
 
+/* living tree */
+function wilted(){var tk=todayKey();if(!Object.keys(state.days).length)return false;return score(getDay(tk))===0&&score(getDay(shift(tk,-1)))===0&&score(getDay(shift(tk,-2)))===0}
+function tree(sc,g,wilt,pop){
+  var LF=[[80,34,0],[60,44,-28],[100,44,28],[46,62,-48],[114,62,48],[66,66,-14],[94,66,14],[52,88,-62],[108,88,62],[80,58,0]];
+  var FR=[[72,50],[90,52],[56,72],[104,74],[80,78],[64,94],[96,96],[46,80],[114,82],[80,40],[70,106],[92,106]];
+  var k=0.62+0.38*Math.min(1,g/21),fruits=Math.min(12,Math.floor(g/3)),lit=wilt?"#A9A04A":"var(--leaf)",i;
+  var h='<svg class="tree'+(wilt?" wilt":"")+'" viewBox="0 0 160 172" width="132" height="142" role="img" aria-label="Анор дарахти: '+sc+' та барг, '+fruits+' та анор">';
+  h+='<ellipse cx="80" cy="162" rx="46" ry="7" fill="var(--tint)"></ellipse><g transform="translate(80 160) scale('+k.toFixed(2)+') translate(-80 -160)"><g class="canopy">';
+  h+='<path d="M75 160C78 132 73 112 80 80C87 112 82 132 85 160Z" fill="#7A5230"></path><path d="M80 110C70 98 62 92 54 84M80 104C90 94 98 90 108 82M80 92C80 78 80 66 80 54" fill="none" stroke="#7A5230" stroke-width="4" stroke-linecap="round"></path>';
+  for(i=0;i<10;i++){var on=i<sc,L=LF[i];h+='<g transform="rotate('+L[2]+' '+L[0]+' '+L[1]+')"><ellipse'+(pop&&i===sc-1?' class="pop"':'')+' cx="'+L[0]+'" cy="'+L[1]+'" rx="9" ry="15" fill="'+(on?lit:"none")+'" stroke="'+(on?lit:"var(--muted)")+'" stroke-opacity="'+(on?1:0.45)+'" stroke-width="1.5"></ellipse></g>'}
+  for(i=0;i<fruits;i++){var F=FR[i];h+='<circle cx="'+F[0]+'" cy="'+F[1]+'" r="5.5" fill="#C0392B" stroke="#FFFFFF" stroke-width="1"></circle><path d="M'+(F[0]-2.5)+' '+(F[1]-4.5)+'l2.5-3.5 2.5 3.5z" fill="#C0392B"></path>'}
+  return h+'</g></g></svg>';
+}
+function treeCard(d,sc){
+  var g=goodDays(),w=wilted(),pop=lastKey===sel&&lastSc!==null&&sc>lastSc,fr=Math.min(12,Math.floor(g/3));
+  lastSc=sc;lastKey=sel;
+  var msg=w?"Дарахтингиз сувсаб қолди. Бугун битта белги қўйинг.":sc>=10?"Дарахт гуллаб турибди.":sc>=6?"Дарахт яшнаяпти.":sc>=1?"Барглар очиляпти: яшнаши учун яна "+(6-sc)+" белги.":"Бугун ҳали сув қуйилмади.";
+  var m=meyorScore();
+  return '<section class="card"><div class="treerow">'+tree(sc,g,w,pop)+'<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><h2>Анор дарахтингиз</h2><div style="font-size:15px">'+msg+'</div><div class="minipills"><span class="mp">'+sc+'/10 барг</span><span class="mp">'+fr+' та анор</span></div><div class="muted">Ҳар белги битта барг. Ҳар 3 яхши кун битта анор.</div></div></div>'
+   +(m.focus?'<div class="note"><b>Бугунги диққат: '+m.focus[0]+'.</b> '+m.focus[1]+'</div>':'')+'</section>';
+}
+/* Meyor score: last 7 days */
+var TIPS=[["Шакарсиз ичимлик","Ширин ичимлик ўрнига сув ёки кўк чой ичинг."],["Нон меъёри","Бугун кечки овқатни нонсиз енг."],["Оқсил","Ҳар овқатга тухум, гўшт, творог ёки дуккакли қўшинг."],["Сабзавот","Тушлик ва кечки овқатни салатдан бошланг."],["Уйқу","Бугун одатдагидан 30 дақиқа эрта ётинг."]];
+function meyorScore(){
+  var dv=derive(),tk=todayKey(),n=0,sum=0,steps=0,osh=0,dough=0,gym=0,hab=[0,0,0,0,0],meals=0,i,j;
+  for(i=6;i>=0;i--){var k=shift(tk,-i);if(!state.days[k])continue;var d=getDay(k);if(score(d)<1&&!d.steps)continue;n++;sum+=score(d);steps+=Math.min(d.steps,dv.stepGoal);osh+=d.osh?1:0;dough+=d.dough?1:0;gym+=d.gym?1:0;for(j=0;j<5;j++)hab[j]+=d.habits[j]?1:0;for(j=0;j<4;j++)meals+=d.meals[j]?1:0}
+  var we=weightEntries(),recent=we.length&&we[we.length-1][0]>=shift(tk,-8);
+  var parts=[["Изчиллик",Math.round(sum/70*50),50],["Қадам",Math.round(steps/(7*dv.stepGoal)*20),20],["Ҳафталик меъёр",n&&osh<=1&&dough<=2?10:0,10],["Куч машқи",Math.min(gym,2)*5,10],["Вазн ёзуви",recent?10:0,10]];
+  var total=0;parts.forEach(function(p){total+=p[1]});
+  var focus=null;
+  if(n>=2){var best=2,idx=-1;for(j=0;j<5;j++){if(hab[j]/n<best){best=hab[j]/n;idx=j}}
+    focus=TIPS[idx];
+    if(steps/(n*dv.stepGoal)<best){best=steps/(n*dv.stepGoal);focus=["Қадам","Ҳар овқатдан кейин 10–15 дақиқа юринг."]}
+    if(meals/(n*4)<best){focus=["Овқат тартиби","Овқатларни режадагидек енг, нонуштани ўтказиб юборманг."]}
+    if(best>=1&&meals/(n*4)>=1)focus=null}
+  return {total:total,parts:parts,focus:focus,n:n};
+}
+function scoreCard(){
+  var m=meyorScore(),len=Math.PI*70,h='<section class="card"><div class="row between"><h2>Меъёр балли</h2><span class="muted">охирги 7 кун</span></div>';
+  h+='<svg class="gauge" viewBox="0 0 180 104" width="220" role="img" aria-label="Меъёр балли: 100 дан '+m.total+'"><path d="M20 92A70 70 0 0 1 160 92" fill="none" stroke="var(--tint)" stroke-width="14" stroke-linecap="round"></path>'
+   +(m.total>0?'<path d="M20 92A70 70 0 0 1 160 92" fill="none" stroke="'+(m.total>=80?"var(--gold)":"var(--accent)")+'" stroke-width="14" stroke-linecap="round" stroke-dasharray="'+(len*m.total/100).toFixed(1)+' '+len.toFixed(1)+'"></path>':'')
+   +'<text x="90" y="84" text-anchor="middle" font-size="36" font-weight="800" fill="var(--ink)">'+m.total+'</text><text x="90" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">100 дан</text></svg>';
+  m.parts.forEach(function(p){h+='<div class="pt"><span>'+p[0]+'</span><div class="bar"><i style="width:'+Math.round(p[1]/p[2]*100)+'%"></i></div><span>'+p[1]+'/'+p[2]+'</span></div>'});
+  h+='<div class="note">'+(m.focus?'<b>Энг заиф жой: '+m.focus[0]+'.</b> '+m.focus[1]:m.n>=2?'Ҳамма одатлар бир текис. Шу суръатда давом этинг.':'Камида 2 кун белгиланг, шунда илова энг заиф жойингизни топиб беради.')+'</div>';
+  return h+'</section>';
+}
+function donut(n,max,bad,good,label,status){
+  var r=22,c=2*Math.PI*r,f=Math.min(1,n/max),col=bad?"var(--hot)":good?"var(--gold)":"var(--accent)";
+  return '<div class="dn"><svg viewBox="0 0 60 60" width="64" height="64" role="img" aria-label="'+label+': '+n+' / '+max+'"><circle cx="30" cy="30" r="'+r+'" fill="none" stroke="var(--tint)" stroke-width="7"></circle>'+(n>0?'<circle cx="30" cy="30" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="7" stroke-linecap="round" stroke-dasharray="'+(c*f).toFixed(1)+' '+c.toFixed(1)+'" transform="rotate(-90 30 30)"></circle>':'')+'<text x="30" y="35" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">'+n+'/'+max+'</text></svg><b>'+label+'</b><span>'+status+'</span></div>';
+}
+function heatCard(){
+  var tk=todayKey(),end=shift(tk,6-dow(tk)),start=shift(end,-(16*7-1)),h='<section class="card"><div class="row between"><h2>Кунлар харитаси</h2><span class="muted">16 ҳафта</span></div><div class="heat" role="img" aria-label="Охирги 16 ҳафта кунлари бажарилиши">',i;
+  for(i=0;i<7;i++)h+='<b>'+DSHORT[i]+'</b>';
+  for(i=0;i<112;i++){var k=shift(start,i),s=state.days[k]?score(getDay(k)):0,c=k>tk?"fut":s>=10?"s4":s>=9?"s3":s>=6?"s2":s>=1?"s1":"";h+='<i class="'+c+(k===tk?" now":"")+'"></i>'}
+  h+='</div><div class="legend">кам<i></i><i style="background:var(--h1)"></i><i style="background:var(--h2)"></i><i style="background:var(--accent)"></i><i style="background:var(--gold)"></i>10 дан 10</div>';
+  return h+'</section>';
+}
+/* body tab */
+var FOODS=[
+ {n:"Оқсил",ex:"тухум, гўшт, творог",col:"var(--accent)",st:"2–4 соат",su:"деярли ўзгармайди",fu:"3–4 соат",dur:9,kt:"0;0.1;0.78;1",cv:"M0 40C40 37 80 37 120 40",t:"Оқсил ошқозонда узоқ туради ва тўқлик сигналларини кучайтиради. Уни ҳазм қилишга тана бошқа овқатларга қараганда кўпроқ қувват сарфлайди."},
+ {n:"Сабзавот",ex:"салат, карам, сабзи",col:"#2E9E5B",st:"1–2 соат",su:"секин ва паст",fu:"2–3 соат",dur:7,kt:"0;0.12;0.6;1",cv:"M0 40C30 30 60 30 120 38",t:"Клетчатка ошқозонда ҳажм эгаллайди ва қанднинг сўрилишини секинлатади. Ҳазм бўлмаган қисми йўғон ичакдаги фойдали бактерияларга озуқа бўлади."},
+ {n:"Нон, гуруч",ex:"оқ нон, ош, хамир",col:"var(--gold)",st:"1–2 соат",su:"тез кўтарилади",fu:"1–2 соат",dur:5,kt:"0;0.15;0.5;1",cv:"M0 40C25 10 50 12 120 36",t:"Крахмал тезда глюкозага парчаланади. Оқсил ва сабзавот билан бирга ейилса, қанд секинроқ кўтарилади."},
+ {n:"Ширин ичимлик",ex:"кола, шарбат, ширин чой",col:"var(--hot)",st:"20–30 дақиқа",su:"жуда тез сакрайди",fu:"деярли йўқ",dur:3,kt:"0;0.2;0.32;1",cv:"M0 40C12 0 26 2 44 30C56 46 80 44 120 40",t:"Суюқ шакар ошқозондан тез ўтиб, қонга бир зумда сўрилади. Калорияси кўп, лекин тўқлик бермайди, шунинг учун биринчи бўлиб шундан воз кечиш тавсия этилади."}];
+function viewBody(){
+  var f=FOODS[food],still=!!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches),h='<h1>Тана қандай ишлайди</h1><div class="muted">Овқат турини танланг ва у танада қандай йўл босишини кўринг.</div>';
+  h+='<section class="card"><h2>Ҳазм йўли</h2><div class="chips">';
+  FOODS.forEach(function(x,i){h+='<button class="chip good" data-act="food" data-i="'+i+'" aria-pressed="'+(i===food?"true":"false")+'">'+x.n+'</button>'});
+  h+='</div><div class="muted">'+f.ex+'</div>';
+  h+='<div class="treerow"><svg viewBox="0 0 180 192" width="170" height="181" role="img" aria-label="Ҳазм йўли схемаси: оғиз, ошқозон, ингичка ичак" style="flex:none"><ellipse cx="84" cy="94" rx="38" ry="27" fill="var(--hot-tint)"></ellipse><path id="tract" d="M90 14V52C90 66 60 70 58 90C56 112 96 116 110 102C122 92 122 128 98 130H62C48 130 48 148 62 148H118C132 148 132 166 118 166H70" fill="none" stroke="var(--tint)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"></path><path d="M90 14V52C90 66 60 70 58 90C56 112 96 116 110 102C122 92 122 128 98 130H62C48 130 48 148 62 148H118C132 148 132 166 118 166H70" fill="none" stroke="var(--muted)" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"></path>'
+   +'<text x="104" y="20" font-size="11" fill="var(--muted)">Оғиз</text><text x="128" y="92" font-size="11" fill="var(--muted)">Ошқозон</text><text x="90" y="186" font-size="11" fill="var(--muted)" text-anchor="middle">Ингичка ичак → қон</text>'
+   +(still?'<circle cx="84" cy="96" r="7" fill="'+f.col+'"></circle>':'<circle r="7" fill="'+f.col+'" stroke="var(--surface)" stroke-width="2"><animateMotion dur="'+f.dur+'s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0.2;0.42;1" keyTimes="'+f.kt+'"><mpath href="#tract"></mpath></animateMotion></circle>')
+   +'</svg><div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1"><div class="muted">Қондаги қанд</div><svg viewBox="0 0 120 50" width="100%" role="img" aria-label="Қондаги қанд эгри чизиғи: '+f.su+'" style="display:block"><path d="M0 44H120" stroke="var(--line)" stroke-width="1"></path><path d="'+f.cv+'" fill="none" stroke="'+f.col+'" stroke-width="3" stroke-linecap="round"></path></svg><div style="font-weight:700;font-size:14px">'+f.su+'</div></div></div>';
+  h+='<div class="facts"><div><span>Ошқозонда</span><b>'+f.st+'</b></div><div><span>Тўқлик</span><b>'+f.fu+'</b></div><div><span>Нуқта тезлиги</span><b>'+(f.dur<=3?"тез":f.dur<=5?"ўртача":"секин")+'</b></div></div>';
+  h+='<div class="note">'+f.t+'</div><div class="muted">Қийматлар тахминий, ҳар одамда ҳар хил бўлади.</div></section>';
+  h+='<section class="card"><h2>Меъёрий тарелка</h2><div class="treerow"><svg viewBox="0 0 200 200" width="150" height="150" role="img" aria-label="Тарелка: ярми сабзавот, чораги оқсил, чораги гарнир" style="flex:none"><circle cx="100" cy="100" r="96" fill="var(--tint)"></circle><path d="M100 12A88 88 0 0 0 100 188Z" fill="#2E7D4F"></path><path d="M100 100V12A88 88 0 0 1 188 100Z" fill="#17508A"></path><path d="M100 100H188A88 88 0 0 1 100 188Z" fill="#F2B544"></path><path d="M100 12V188M100 100H188" stroke="#FFFFFF" stroke-width="3"></path><text x="56" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">Сабзавот</text><text x="56" y="118" text-anchor="middle" font-size="18" font-weight="800" fill="#FFFFFF">½</text><text x="142" y="60" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">Оқсил</text><text x="142" y="80" text-anchor="middle" font-size="17" font-weight="800" fill="#FFFFFF">¼</text><text x="142" y="138" text-anchor="middle" font-size="14" font-weight="700" fill="#3A2A00">Гарнир</text><text x="142" y="158" text-anchor="middle" font-size="17" font-weight="800" fill="#3A2A00">¼</text></svg><div style="display:flex;flex-direction:column;gap:6px;font-size:14.5px;min-width:0"><div><b>Ярми:</b> салат, аччиқ-чучук, димланган сабзавот.</div><div><b>Чораги:</b> гўшт, товуқ, балиқ, тухум, дуккакли.</div><div><b>Чораги:</b> гуруч, гречка, картошка, макарон ёки нон.</div></div></div></section>';
+  var HS=[['<rect x="7" y="9" width="14" height="15" rx="4"></rect><path d="M9 9V5M12.5 9V3.5M16 9V4.500M19.5 10V6.5M7 15l-3-3"></path>',"Кафт","гўшт, товуқ, балиқ: 1 кафт"],['<rect x="6" y="10" width="16" height="13" rx="6"></rect><path d="M10 10V7.5M14 10V7M18 10V8M6 17H3.5"></path>',"Мушт","гуруч, гречка, картошка: 1 мушт"],['<path d="M4 13c0 6 4 10 10 10s10-4 10-10"></path><path d="M9 13c1-2 3-3 5-3s4 1 5 3"></path>',"Ҳовуч","мева ёки ёнғоқ: 1 ҳовуч"],['<rect x="11" y="4" width="7" height="14" rx="3.5"></rect><path d="M8 24c0-4 2-6 6.5-6S21 20 21 24"></path>',"Бош бармоқ","ёғ, сариёғ: 1 бош бармоқ"]];
+  h+='<section class="card"><h2>Порция қўл билан ўлчанади</h2><div class="muted">Тарози шарт эмас: ўз қўлингиз ўз танангизга мос ўлчов.</div>';
+  HS.forEach(function(x){h+='<div class="hand"><svg viewBox="0 0 28 28" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+x[0]+'</svg><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>'});
+  return h+'</section>';
+}
 /* profile form */
 function draftFrom(p){return p?{name:p.name,sex:p.sex,age:""+p.age,h:""+p.h,w:fmt(lastWeight()||p.w0),goal:fmt(p.goal),act:""+p.act,health:p.health}:{name:tgName(),sex:"m",age:"",h:"",w:"",goal:"",act:"1",health:false}}
 function seg(name,opts,val,cols){var h='<div class="seg c'+cols+'" role="radiogroup">';opts.forEach(function(o){h+='<label class="'+(val===o[0]?"on":"")+'"><input type="radio" name="'+name+'" id="'+name+'-'+o[0]+'" value="'+o[0]+'"'+(val===o[0]?" checked":"")+'><span>'+o[1]+'</span></label>'});return h+'</div>'}
@@ -380,26 +525,30 @@ function submitProfile(){
 /* views */
 function viewStart(){
   if(!draft)draft=draftFrom(null);
-  return band(true,'<div class="hello">Палов ҳам, нон ҳам қолади. Фақат меъёрида.</div>')
+  return band(true,'<div class="hello">Палов ҳам, нон ҳам қолади. Фақат меъёрида.</div><div class="hrow"><span class="pill">Ўзбекча таомлар</span><span class="pill">Калория санамайсиз</span><span class="pill">Кунига 2 дақиқа</span></div>')
    +'<section class="card"><h2>Ўзингизга мос режа</h2><div class="muted">Бир неча саволга жавоб беринг. Меъёр сизга мос порция, 7 кунлик ўзбекча таомнома ва кунлик одатларни тузиб беради.</div>'+formHtml(true)+'</section>'
    +'<p class="muted" style="margin:0;text-align:center">Меъёр тиббий маслаҳат ўрнини босмайди.</p>'
    +(sync==="wait"?'<p class="muted" id="sync" style="margin:0;text-align:center">'+syncText()+'</p>':'');
 }
 function viewToday(){
   var dv=derive(),d=getDay(sel),sc=score(d),isToday=sel===todayKey(),menu=curMenu()[dow(sel)],h="",st=streak(),nm=state.profile.name;
-  h+=band(false,'<div class="hello">'+(nm?"Салом, "+esc(nm)+". ":"")+(sc>=9?"Бугун аъло кун.":sc>=6?"Яхши кетяпсиз.":sc>=1?"Давом этинг.":"Кунни бир белгидан бошланг.")+'</div>'+(st>0?'<div class="streak">'+flame()+st+' кун кетма-кет</div>':''));
+  var lv=level();
+  h+=band(false,'<div class="hello">'+(nm?"Салом, "+esc(nm)+". ":"")+(sc>=10?"Бугун тўлиқ бажарилди!":sc>=6?"Яхши кетяпсиз.":sc>=1?"Давом этинг.":"Кунни бир белгидан бошланг.")+'</div>'
+   +'<div class="hrow">'+(st>0?'<span class="streak">'+flame()+st+' кун кетма-кет</span>':'')+'<span class="pill">Даража: '+lv.name+(lv.next?' · '+lv.next[1]+'гача '+(lv.next[0]-lv.g)+' кун':'')+'</span></div>'+weekDots());
   h+='<div class="datebar"><button class="iconbtn" data-act="prev" aria-label="Олдинги кун"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>'
    +'<div style="text-align:center"><h1>'+dateLabel(sel)+'</h1>'+(isToday?'<div class="muted">Бугун</div>':'<button class="pillbtn" data-act="today" style="margin-top:6px">Бугунга қайтиш</button>')+'</div>'
    +'<button class="iconbtn" data-act="next" aria-label="Кейинги кун"'+(isToday?' disabled':'')+'><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button></div>';
   var gp=goalPct(dv);
-  h+='<section class="card"><div class="summary">'+ring(sc,10)+'<div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1"><div style="font-weight:700">Кунлик натижа</div><div class="muted">4 овқат, 5 одат ва қадам</div>'
+  h+='<section class="card'+(sc>=10?" done":"")+'"><div class="summary">'+ring(sc,10)+'<div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1"><div style="font-weight:700">'+(sc>=10?"Аъло! 10 дан 10":"Кунлик натижа")+'</div><div class="muted">4 овқат, 5 одат ва қадам</div>'
    +(gp!==null?'<div class="muted">Вазн: '+fmt(dv.w)+' → '+fmt(dv.goal)+' кг · йўлнинг '+gp+'%</div><div class="bar"><i style="width:'+gp+'%"></i></div>':'<div class="muted">Вазн: '+fmt(dv.w)+' кг · '+LEVELS[dv.level].name.toLowerCase()+'</div>')
    +'</div></div></section>';
+  h+=treeCard(d,sc);
   h+='<section class="card"><h2>Бугунги овқат</h2>';
-  for(var i=0;i<4;i++){h+='<button class="tick" data-act="meal" data-i="'+i+'" aria-pressed="'+(d.meals[i]?"true":"false")+'">'+check()+'<span class="lab"><span class="k">'+MEALS[i]+'</span><span class="v">'+mealHtml(menu[i])+'</span></span></button>'}
+  var nextI=-1,i;if(isToday){for(i=0;i<4;i++){if(!d.meals[i]){nextI=i;break}}}
+  for(i=0;i<4;i++){h+='<button class="tick'+(i===nextI?" next":"")+'" data-act="meal" data-i="'+i+'" aria-pressed="'+(d.meals[i]?"true":"false")+'">'+mealIcon(i)+'<span class="lab"><span class="k">'+MEALS[i]+(i===nextI?" · кейинги қадам":"")+'</span><span class="v">'+mealHtml(menu[i])+'</span></span>'+check()+'</button>'}
   h+='</section>';
   h+='<section class="card"><h2>Одатлар</h2>';
-  for(i=0;i<5;i++){h+='<button class="tick" data-act="habit" data-i="'+i+'" aria-pressed="'+(d.habits[i]?"true":"false")+'">'+check()+'<span class="lab"><span class="v">'+HABITS[i]+'</span></span></button>'}
+  for(i=0;i<5;i++){h+='<button class="tick" data-act="habit" data-i="'+i+'" aria-pressed="'+(d.habits[i]?"true":"false")+'"><span class="lab"><span class="v">'+HABITS[i]+'</span></span>'+check()+'</button>'}
   h+='</section>';
   var pct=Math.min(100,Math.round(d.steps/dv.stepGoal*100));
   h+='<section class="card"><div class="row between"><h2>Қадам</h2><span class="muted">'+num(d.steps)+' / '+num(dv.stepGoal)+'</span></div><div class="bar"><i style="width:'+pct+'%"></i></div>'
@@ -407,8 +556,9 @@ function viewToday(){
   h+='<section class="card"><h2>Бугун бўлдими?</h2><div class="chips">';
   FLAGS.forEach(function(f){h+='<button class="chip'+(f[2]?" good":"")+'" data-act="flag" data-k="'+f[0]+'" aria-pressed="'+(d[f[0]]?"true":"false")+'">'+f[1]+'</button>'});
   h+='</div><div class="muted">Ҳафталик ҳисоб «Ҳафта» бўлимида.</div></section>';
-  var w=+state.weights[sel]||0;
-  h+='<section class="card"><div class="row between"><h2>Вазн</h2><span class="muted">ҳафтада 1 марта, оч қоринга</span></div><div class="field"><input id="weight-input" type="text" inputmode="decimal" value="'+(w?fmt(w):"")+'" placeholder="масалан '+fmt(dv.w)+'" aria-label="Вазн, кг"><span class="muted" style="flex:none">кг</span><button class="pillbtn primary" data-act="saveweight">Сақлаш</button></div>'+chart()+'</section>';
+  var w=+state.weights[sel]||0,bw=+state.waist[sel]||0;
+  h+='<section class="card"><div class="row between"><h2>Вазн ва бел</h2><span class="muted">ҳафтада 1 марта, оч қоринга</span></div><div class="field"><input id="weight-input" type="text" inputmode="decimal" value="'+(w?fmt(w):"")+'" placeholder="вазн, масалан '+fmt(dv.w)+'" aria-label="Вазн, кг"><span class="muted" style="flex:none;width:22px">кг</span><button class="pillbtn primary" data-act="saveweight">Сақлаш</button></div>'
+   +'<div class="field"><input id="waist-input" type="text" inputmode="decimal" value="'+(bw?fmt(bw):"")+'" placeholder="бел, масалан '+waistLimits()[0]+'" aria-label="Бел айланаси, см"><span class="muted" style="flex:none;width:22px">см</span><button class="pillbtn" data-act="savewaist">Сақлаш</button></div><div class="muted">Бел киндик сатҳида, нафас чиқаргандан кейин ўлчанади.</div>'+chart()+'</section>';
   var day=Math.floor(parse(sel).getTime()/864e5);
   h+='<div class="proverb">'+PROVERBS[((day%PROVERBS.length)+PROVERBS.length)%PROVERBS.length]+'</div>';
   h+='<p class="muted" id="sync" style="margin:0;text-align:center">'+syncText()+'</p>';
@@ -417,14 +567,13 @@ function viewToday(){
 function viewWeek(){
   var dv=derive(),ks=weekKeys(sel),h="",tot={osh:0,dough:0,gym:0},steps=0,stepDays=0,tk=todayKey();
   h+='<h1>Ҳафта</h1><div class="muted">'+parse(ks[0]).getDate()+'-'+MONTHS[parse(ks[0]).getMonth()]+' — '+parse(ks[6]).getDate()+'-'+MONTHS[parse(ks[6]).getMonth()]+'</div>';
+  h+=scoreCard();
   h+='<section class="card"><h2>Кунлик бажарилиш</h2><div class="week">';
   ks.forEach(function(k,i){var d=getDay(k),s=score(d);tot.osh+=d.osh?1:0;tot.dough+=d.dough?1:0;tot.gym+=d.gym?1:0;if(d.steps>0){steps+=d.steps;stepDays++}
     h+='<button class="wd'+(k===sel?" sel":"")+'" data-act="goto" data-k="'+k+'"'+(k>tk?" disabled":"")+' aria-label="'+DAYS[i]+': '+s+' / 10"><b>'+DSHORT[i]+'</b><span class="col"><i style="height:'+(s*10)+'%"></i></span><span>'+s+'/10</span></button>'});
   h+='</div><div class="muted">Кунни босиб, уни очинг.</div></section>';
   h+='<section class="card"><h2>Ҳафталик ҳисоб</h2>';
-  h+='<div class="stat"><div><div style="font-weight:600">Ош</div><div class="muted">меъёр: 1 марта</div></div><span class="state'+(tot.osh>1?" over":"")+'">'+tot.osh+' / 1 · '+(tot.osh>1?"ошиб кетди":"меъёрда")+'</span></div>';
-  h+='<div class="stat"><div><div style="font-weight:600">Хамир ва қовурилган</div><div class="muted">меъёр: 1–2 марта</div></div><span class="state'+(tot.dough>2?" over":"")+'">'+tot.dough+' / 2 · '+(tot.dough>2?"ошиб кетди":"меъёрда")+'</span></div>';
-  h+='<div class="stat"><div><div style="font-weight:600">Куч машқлари</div><div class="muted">мақсад: 2–3 марта</div></div><span class="state'+(tot.gym<2?" over":"")+'">'+tot.gym+' / 3 · '+(tot.gym>=2?"бажарилди":"яна "+(2-tot.gym)+" та")+'</span></div>';
+  h+='<div class="dns">'+donut(tot.osh,1,tot.osh>1,false,"Ош",tot.osh>1?"ошиб кетди":"меъёр 1 марта")+donut(tot.dough,2,tot.dough>2,false,"Хамир, қовурма",tot.dough>2?"ошиб кетди":"меъёр 2 марта")+donut(tot.gym,3,false,tot.gym>=2,"Куч машқи",tot.gym>=2?"бажарилди":"мақсад 2–3")+'</div>';
   h+='<div class="stat"><div><div style="font-weight:600">Ўртача қадам</div><div class="muted">мақсад: '+num(dv.stepGoal)+'</div></div><span class="big" style="font-size:20px">'+(stepDays?num(steps/stepDays):"—")+'</span></div>';
   h+='</section>';
   var bs=bestStreak(),lost=dv.start-dv.w,any=Object.keys(state.days).some(function(k){return score(getDay(k))>=1});
@@ -433,11 +582,16 @@ function viewWeek(){
   h+='<section class="card"><h2>Ютуқлар</h2><div class="chips">';
   bd.forEach(function(b){h+='<span class="badge'+(b[1]?" on":"")+'">'+(b[1]?'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>':'')+b[0]+(b[1]?'':' · ҳали эмас')+'</span>'});
   h+='</div><div class="muted">Кун ҳисобга олиниши учун 10 дан камида 6 балл керак.</div></section>';
+  h+=heatCard();
   var e=weightEntries();
   h+='<section class="card"><h2>Вазн</h2>';
   if(e.length){var diff=dv.w-dv.start;h+='<div class="row between"><div><div class="big">'+fmt(dv.w)+' кг</div><div class="muted">бошланиш '+fmt(dv.start)+' кг</div></div><span class="state'+(diff>0.05&&dv.mode==="lose"?" over":"")+'">'+(diff>0?"+":"")+fmt(diff)+' кг</span></div>';
     if(dv.mode==="lose"){var left=dv.w-dv.goal;h+='<div class="muted">'+(left>0.05?"Мақсадгача "+fmt(left)+" кг қолди.":"Мақсадга етдингиз.")+'</div>'}}
   h+=chart()+'</section>';
+  var be=waistEntries(),wl=waistLimits();
+  h+='<section class="card"><h2>Бел айланаси</h2>';
+  if(be.length){var bc=be[be.length-1][1],bd0=bc-be[0][1];h+='<div class="row between"><div><div class="big">'+fmt(bc)+' см</div><div class="muted">'+(be.length>1?"бошидан "+(bd0>0?"+":"")+fmt(bd0)+" см":"биринчи ўлчов")+'</div></div><span class="state'+(bc>=wl[0]?" over":"")+'">'+(bc<wl[0]?"меъёрда":bc<wl[1]?"хавф ортган":"юқори хавф")+'</span></div>'}
+  h+='<div class="muted">Бел айланаси қорин ёғини вазндан кўра аниқроқ кўрсатади. '+(state.profile.sex==="f"?"Аёлларда 80 см дан":"Эркакларда 94 см дан")+' паст бўлиши тавсия этилади.</div>'+waistChart()+'</section>';
   return h;
 }
 function viewMenu(){
@@ -467,14 +621,23 @@ function viewProfile(){
   h+='<p class="muted" id="sync" style="margin:0;text-align:center">'+syncText()+'</p>';
   return h;
 }
-function tab(){if(!state.profile)return "start";var h=(location.hash||"").replace("#","");return h==="week"||h==="menu"||h==="profile"?h:"today"}
+function tab(){if(!state.profile)return "start";var h=(location.hash||"").replace("#","");return h==="week"||h==="menu"||h==="profile"||h==="body"?h:"today"}
 function render(){
   var t=tab(),v=document.getElementById("view"),top=v.scrollTop,act=document.activeElement,fid=act&&act.id,isText=act&&act.tagName==="INPUT"&&act.type==="text";
-  v.innerHTML=t==="start"?viewStart():t==="week"?viewWeek():t==="menu"?viewMenu():t==="profile"?viewProfile():viewToday();
+  v.innerHTML=t==="start"?viewStart():t==="week"?viewWeek():t==="menu"?viewMenu():t==="profile"?viewProfile():t==="body"?viewBody():viewToday();
   v.scrollTop=top;
   if(fid){var el=document.getElementById(fid);if(el&&el!==document.activeElement){el.focus();if(isText){try{el.setSelectionRange(el.value.length,el.value.length)}catch(e){}}}}
   document.getElementById("nav").hidden=t==="start";
-  ["today","week","menu","profile"].forEach(function(n){var a=document.getElementById("tab-"+n);if(n===t)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  ["today","week","menu","body","profile"].forEach(function(n){var a=document.getElementById("tab-"+n);if(n===t)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+}
+function saveWaist(){
+  var el=document.getElementById("waist-input");if(!el)return;
+  var raw=el.value.trim().replace(",",".");
+  if(raw===""){if(+state.waist[sel]>0){state.waist[sel]=0;state.bu[sel]=Date.now();touch(mkey(sel))}return}
+  var n=Math.round(parseFloat(raw)*10)/10;
+  if(!(n>=40&&n<=200)){el.focus();return}
+  if(+state.waist[sel]===n)return;
+  state.waist[sel]=n;state.bu[sel]=Date.now();touch(mkey(sel));
 }
 function saveSteps(val){var n=Math.round(+val);if(!(n>=0)||n>80000)return;var d=getDay(sel);if(d.steps===n)return;d.steps=n;setDay(sel,d)}
 function saveWeight(){
@@ -494,6 +657,8 @@ document.addEventListener("click",function(ev){
   else if(a==="flag"){var k=b.getAttribute("data-k");d[k]=d[k]?0:1;haptic();setDay(sel,d)}
   else if(a==="addsteps"){d.steps=Math.min(80000,(d.steps||0)+1000);setDay(sel,d)}
   else if(a==="saveweight"){saveWeight()}
+  else if(a==="savewaist"){saveWaist()}
+  else if(a==="food"){food=+b.getAttribute("data-i")||0;render()}
   else if(a==="home"){try{tg.addToHomeScreen()}catch(e){}}
   else if(a==="prev"){sel=shift(sel,-1);render()}
   else if(a==="next"){if(sel<todayKey()){sel=shift(sel,1);render()}}
@@ -509,6 +674,7 @@ document.addEventListener("change",function(ev){
   var t=ev.target,id=t.id||"";
   if(id==="steps-input")saveSteps(t.value||0);
   else if(id==="weight-input")saveWeight();
+  else if(id==="waist-input")saveWaist();
   else if(draft&&t.name==="pf-sex"){draft.sex=t.value;render()}
   else if(draft&&t.name==="pf-act"){draft.act=t.value;render()}
   else if(draft&&id==="pf-health"){draft.health=t.checked}
